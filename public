@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADYC powered by ECA - Empowering Emirati Youth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Fresh Modern Color Palette - Sunset Theme */
+            --color-white: #FFFFFF;
+            --color-sunset-orange: #FF6B35;
+            --color-sunset-pink: #F7931E;
+            --color-sunset-purple: #C5299B;
+            --color-ocean-blue: #1E3A8A;
+            --color-ocean-teal: #0891B2;
+            --color-soft-peach: #FFEDD5;
+            --color-soft-lavender: #F3E8FF;
+            --color-text-dark: #1F2937;
+            --color-border-modern: #E5E7EB;
+            --color-shadow-modern: rgba(251, 146, 60, 0.15);
+
+            /* Sunset gradient variations */
+            --color-primary-gradient: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            --color-secondary-gradient: linear-gradient(135deg, #C5299B 0%, #8B5CF6 100%);
+            --color-accent-gradient: linear-gradient(135deg, #0891B2 0%, #06B6D4 100%);
+
+            /* Beautiful modern shadows */
+            --shadow-soft: 0 4px 20px rgba(251, 146, 60, 0.08);
+            --shadow-strong: 0 10px 40px rgba(251, 146, 60, 0.15);
+            --shadow-glow: 0 0 30px rgba(255, 107, 53, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background: linear-gradient(135deg, 
+                #FFF5EB 0%, 
+                #FFE4E1 25%, 
+                #E0E7FF 50%, 
+                #F3E8FF 75%, 
+                #FFEDD5 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(197, 41, 155, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 90%, rgba(8, 145, 178, 0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-50px, 50px) rotate(5deg); }
+        }
+
+        #chatbox-container {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            max-height: 700px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: var(--shadow-strong), 
+                        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header with glass morphism */
+        #chatbox-header {
+            background: var(--color-primary-gradient);
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #chatbox-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: headerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, -20px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ADE80;
+            box-shadow: 0 0 10px #4ADE80;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.9); }
+        }
+
+        /* Messages area */
+        #chatbox-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 100%);
+        }
+
+        /* Custom scrollbar */
+        #chatbox-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chatbox-messages::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        #chatbox-messages::-webkit-scrollbar-thumb {
+            background: var(--color-primary-gradient);
+            border-radius: 10px;
+        }
+
+        /* Welcome message */
+        .welcome-message {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 147, 30, 0.1) 100%);
+            border: 2px dashed var(--color-sunset-orange);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .welcome-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: var(--color-primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            color: var(--color-text-dark);
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .quick-action-btn {
+            background: white;
+            border: 2px solid var(--color-sunset-orange);
+            color: var(--color-sunset-orange);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--color-primary-gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Message bubbles */
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: messageSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.user-message {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .bot-message .message-avatar {
+            background: var(--color-primary-gradient);
+        }
+
+        .user-message .message-avatar {
+            background: var(--color-secondary-gradient);
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .bot-message .message-content {
+            background: white;
+            color: var(--color-text-dark);
+            box-shadow: var(--shadow-soft);
+            border-bottom-right-radius: 5px;
+        }
+
+        .user-message .message-content {
+            background: var(--color-primary-gradient);
+            color: white;
+            box-shadow: var(--shadow-soft);
+            border-bottom-left-radius: 5px;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 12px;
+            padding: 20px 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 6px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .typing-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-sunset-orange);
+            animation: typingDot 1.4s ease-in-out infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingDot {
+            0%, 60%, 100% { transform: scale(1); opacity: 0.7; }
+            30% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* Input area */
+        #chatbox-input-area {
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: white;
+            padding: 8px 8px 8px 20px;
+            border-radius: 25px;
+            box-shadow: var(--shadow-soft);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--color-sunset-orange);
+            box-shadow: var(--shadow-glow);
+        }
+
+        #user-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background: transparent;
+            color: var(--color-text-dark);
+        }
+
+        #user-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        #send-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: var(--color-primary-gradient);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        #send-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        #send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #chatbox-container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .header-title {
+                font-size: 20px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+ 
+
+    </style>
+</head>
+<body>
+    <div id="chatbox-container">
+        <!-- Header -->
+        <div id="chatbox-header">
+            <div class="header-content">
+                <div class="header-title">مرحباً بك في ADYC powered by ECA</div>
+                <div class="header-subtitle">اسألني عن التخطيط للحياة والأسرة والاستعداد المالي</div>
+            </div>
+            <div class="header-actions">
+                <div class="connection-status">
+                    <span class="status-dot"></span>
+                    <span>جاهز للاتصال</span>
+                </div>
+                <button class="header-btn" onclick="clearChat()" title="مسح المحادثة">
+                    🗑️
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="chatbox-messages">
+            <div class="welcome-message">
+                <div class="welcome-title">مرحباً بك في ADYC powered by ECA</div>
+                <div class="welcome-text">اسألني عن التخطيط للحياة والأسرة والاستعداد المالي</div>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="sendQuickMessage('كيف أخطط لمستقبلي؟')">التخطيط 🎯</button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('نصائح للزواج')">الأسرة 👨‍👩‍👧‍👦</button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('كيف أدخر المال؟')">المال 💰</button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('كيف أطور نفسي؟')">التطوير الشخصي 🚀</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div id="chatbox-input-area">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="user-input" 
+                    placeholder="اكتب رسالتك هنا..." 
+                    onkeypress="handleKeyPress(event)"
+                />
+                <button id="send-btn" onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_ENDPOINT = 'http://localhost:3000/api/chat';
+        let conversationHistory = [];
+        let isProcessing = false;
+
+        function addMessage(content, isUser) {
+            const messagesContainer = document.getElementById('chatbox-messages');
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
+                <div class="message-content">${content}</div>
+            `;
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatbox-messages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="message-avatar" style="background: var(--color-primary-gradient);">🤖</div>
+                <div class="typing-dots">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+
+            if (!message || isProcessing) return;
+
+            // Add user message
+            addMessage(message, true);
+            input.value = '';
+
+            // Add to conversation history
+            conversationHistory.push({
+                role: 'user',
+                content: message
+            });
+
+            // Show typing indicator
+            isProcessing = true;
+            document.getElementById('send-btn').disabled = true;
+            showTypingIndicator();
+
+            try {
+                // Prepare messages with system context
+                const messages = [
+                    {
+                        role: 'system',
+                        content: 'أنت مساعد ذكي من ADYC متخصص في تقديم النصائح حول: التخطيط للحياة والمستقبل المهني، تكوين الأسرة والزواج، والجاهزية المالية والادخار. قدم نصائح عملية ومفيدة باللغة العربية.'
+                    },
+                    ...conversationHistory
+                ];
+
+                // Call API
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ messages })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Extract bot response
+                if (data.choices && data.choices[0] && data.choices[0].message) {
+                    const botMessage = data.choices[0].message.content;
+
+                    // Add to history
+                    conversationHistory.push({
+                        role: 'assistant',
+                        content: botMessage
+                    });
+
+                    // Hide typing and show response
+                    hideTypingIndicator();
+                    addMessage(botMessage, false);
+                } else {
+                    throw new Error('Invalid response format');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                hideTypingIndicator();
+                addMessage('عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', false);
+            } finally {
+                isProcessing = false;
+                document.getElementById('send-btn').disabled = false;
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('user-input').value = message;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function clearChat() {
+            if (confirm('هل أنت متأكد من مسح المحادثة؟')) {
+                conversationHistory = [];
+                const messagesContainer = document.getElementById('chatbox-messages');
+                messagesContainer.innerHTML = `
+                    <div class="welcome-message">
+                        <div class="welcome-title">مرحباً بك في ADYC powered by ECA</div>
+                        <div class="welcome-text">اسألني عن التخطيط للحياة والأسرة والاستعداد المالي</div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="sendQuickMessage('كيف أخطط لمستقبلي؟')">التخطيط 🎯</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('نصائح للزواج')">الأسرة 👨‍👩‍👧‍👦</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('كيف أدخر المال؟')">المال 💰</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('كيف أطور نفسي؟')">التطوير الشخصي 🚀</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
