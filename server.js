@@ -4,7 +4,8 @@ const fetch = require('node-fetch');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+// ✅ غيّر هاي السطر - استخدم process.env.PORT
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -43,7 +44,7 @@ app.post('/api/chat', async (req, res) => {
         model: MODEL,
         messages: messages,
         temperature: 0.7,
-        max_tokens: 2000 // زودنا الـ max_tokens لأن Sonar Pro بيعطي إجابات أطول
+        max_tokens: 2000
       })
     });
 
@@ -71,7 +72,8 @@ app.get('/health', (req, res) => {
   res.json({ status: 'Running', model: MODEL });
 });
 
-app.listen(PORT, () => {
-  console.log('🚀 ADYC Server على http://localhost:' + PORT);
-  console.log('📡 Model: ' + MODEL);
+// ✅ غيّر app.listen عشان يستخدم 0.0.0.0
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 ADYC Server running on port ${PORT}`);
+  console.log(`📡 Model: ${MODEL}`);
 });
