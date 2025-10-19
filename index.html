@@ -195,9 +195,8 @@
             padding: 18px 22px;
             border-radius: 20px;
             font-size: 15px;
-            line-height: 1.8;
+            line-height: 2;
             word-wrap: break-word;
-            white-space: pre-wrap;
             direction: rtl;
             text-align: right;
         }
@@ -216,10 +215,10 @@
             border-bottom-left-radius: 5px;
         }
 
-        /* ✅ تنسيق النص داخل الرسائل */
+        /* ✅ تنسيق الفقرات */
         .message-content p {
-            margin-bottom: 12px;
-            line-height: 1.8;
+            margin-bottom: 15px;
+            line-height: 2;
         }
 
         .message-content strong {
@@ -227,71 +226,114 @@
             color: var(--color-sunset-orange);
         }
 
-        .message-content ul,
+        /* ✅ تنسيق القوائم المرقمة */
         .message-content ol {
-            margin: 10px 0;
+            margin: 15px 0;
             padding-right: 25px;
+            list-style-position: outside;
         }
 
-        .message-content li {
-            margin-bottom: 8px;
-            line-height: 1.7;
+        .message-content ol li {
+            margin-bottom: 15px;
+            line-height: 2;
+            padding-right: 5px;
         }
 
-        /* ✅ تنسيق الجداول */
+        /* ✅ تنسيق القوائم بالشرطة */
+        .message-content ul {
+            margin: 15px 0;
+            padding-right: 25px;
+            list-style-type: disc;
+        }
+
+        .message-content ul li {
+            margin-bottom: 12px;
+            line-height: 2;
+        }
+
+        /* ✅ تنسيق الجداول - هذا الأهم! */
         .message-content table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            direction: rtl;
+        }
+
+        .message-content thead {
+            background: var(--color-primary-gradient);
         }
 
         .message-content th {
-            background: var(--color-primary-gradient);
             color: white;
-            padding: 12px;
+            padding: 15px 12px;
             text-align: right;
             font-weight: 600;
+            font-size: 14px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .message-content td {
-            padding: 10px 12px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px;
             text-align: right;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 14px;
+            line-height: 1.8;
         }
 
-        .message-content tr:last-child td {
+        .message-content tbody tr:last-child td {
             border-bottom: none;
         }
 
-        .message-content tr:nth-child(even) {
+        .message-content tbody tr:nth-child(even) {
             background: rgba(255, 107, 53, 0.05);
+        }
+
+        .message-content tbody tr:hover {
+            background: rgba(255, 107, 53, 0.1);
         }
 
         /* ✅ تنسيق الكود */
         .message-content code {
-            background: rgba(0, 0, 0, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.08);
+            padding: 3px 8px;
+            border-radius: 5px;
             font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .message-content pre {
             background: rgba(0, 0, 0, 0.05);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             overflow-x: auto;
-            margin: 10px 0;
+            margin: 15px 0;
+        }
+
+        .message-content pre code {
+            background: transparent;
+            padding: 0;
         }
 
         /* ✅ تنسيق الفواصل */
         .message-content hr {
             border: none;
             border-top: 2px solid rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        /* ✅ تنسيق الاقتباسات */
+        .message-content blockquote {
+            border-right: 4px solid var(--color-sunset-orange);
+            padding: 10px 20px;
             margin: 15px 0;
+            background: rgba(255, 107, 53, 0.05);
+            border-radius: 8px;
+            font-style: italic;
         }
 
         .typing-indicator {
@@ -387,6 +429,15 @@
             .message-content {
                 max-width: 85%;
             }
+
+            .message-content table {
+                font-size: 12px;
+            }
+
+            .message-content th,
+            .message-content td {
+                padding: 8px 6px;
+            }
         }
     </style>
 </head>
@@ -428,25 +479,24 @@
         </div>
     </div>
 
+    <!-- ✅ مكتبة marked.js لتحويل Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         const API_ENDPOINT = '/api/chat';
         let conversationHistory = [];
         let isProcessing = false;
 
-        // ✅ إعداد marked للـ RTL
+        // ✅ إعداد marked مع دعم الجداول
         marked.setOptions({
             breaks: true,
-            gfm: true
+            gfm: true,
+            tables: true,
+            sanitize: false
         });
 
         function formatBotMessage(content) {
-            // تحويل Markdown لـ HTML
+            // تحويل Markdown إلى HTML
             let html = marked.parse(content);
-            
-            // تنظيف النص
-            html = html.replace(/\n\n+/g, '\n\n');
-            
             return html;
         }
 
@@ -510,7 +560,7 @@
                 const messages = [
                     {
                         role: 'system',
-                        content: 'أنت مساعد ذكي من ADYC متخصص في تقديم النصائح حول: التخطيط للحياة والمستقبل المهني، تكوين الأسرة والزواج، والجاهزية المالية والادخار. قدم إجابات منظمة ومنسقة باستخدام Markdown عند الحاجة للجداول والقوائم.'
+                        content: 'أنت مساعد ذكي من ADYC متخصص في تقديم النصائح حول: التخطيط للحياة والمستقبل المهني، تكوين الأسرة والزواج، والجاهزية المالية والادخار. قدم إجابات منظمة ومنسقة باستخدام Markdown. استخدم الجداول والقوائم المرقمة عند الحاجة.'
                     },
                     ...conversationHistory
                 ];
