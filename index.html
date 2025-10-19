@@ -6,13 +6,10 @@
     <title>ADYC powered by ECA - Empowering Emirati Youth</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="rtl.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="chat-override.css">
 
    <style>
-       {
+        * {
             direction: rtl;
             text-align: right;
         }
@@ -22,6 +19,7 @@
             text-align: right;
             unicode-bidi: plaintext;
         }
+
         :root {
             /* Fresh Modern Color Palette - Sunset Theme */
             --color-white: #FFFFFF;
@@ -484,8 +482,6 @@
                 max-width: 85%;
             }
         }
- 
-
     </style>
 </head>
 <body>
@@ -536,7 +532,8 @@
     </div>
 
     <script>
-        const API_ENDPOINT = 'http://localhost:3000/api/chat';
+        // ✅ استخدم نفس الدومين - لا تحط localhost!
+        const API_ENDPOINT = '/api/chat';
         let conversationHistory = [];
         let isProcessing = false;
 
@@ -585,23 +582,19 @@
 
             if (!message || isProcessing) return;
 
-            // Add user message
             addMessage(message, true);
             input.value = '';
 
-            // Add to conversation history
             conversationHistory.push({
                 role: 'user',
                 content: message
             });
 
-            // Show typing indicator
             isProcessing = true;
             document.getElementById('send-btn').disabled = true;
             showTypingIndicator();
 
             try {
-                // Prepare messages with system context
                 const messages = [
                     {
                         role: 'system',
@@ -610,7 +603,6 @@
                     ...conversationHistory
                 ];
 
-                // Call API
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: {
@@ -625,17 +617,14 @@
 
                 const data = await response.json();
 
-                // Extract bot response
                 if (data.choices && data.choices[0] && data.choices[0].message) {
                     const botMessage = data.choices[0].message.content;
 
-                    // Add to history
                     conversationHistory.push({
                         role: 'assistant',
                         content: botMessage
                     });
 
-                    // Hide typing and show response
                     hideTypingIndicator();
                     addMessage(botMessage, false);
                 } else {
@@ -681,6 +670,11 @@
                 `;
             }
         }
+
+        // ✅ تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('ADYC Chatbot loaded successfully');
+        });
     </script>
 </body>
 </html>
