@@ -10,45 +10,22 @@
 
    <style>
         * {
-            direction: rtl;
-            text-align: right;
-        }
-        
-        body {
-            direction: rtl;
-            text-align: right;
-            unicode-bidi: plaintext;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         :root {
-            /* Fresh Modern Color Palette - Sunset Theme */
             --color-white: #FFFFFF;
             --color-sunset-orange: #FF6B35;
             --color-sunset-pink: #F7931E;
             --color-sunset-purple: #C5299B;
-            --color-ocean-blue: #1E3A8A;
-            --color-ocean-teal: #0891B2;
-            --color-soft-peach: #FFEDD5;
-            --color-soft-lavender: #F3E8FF;
             --color-text-dark: #1F2937;
-            --color-border-modern: #E5E7EB;
-            --color-shadow-modern: rgba(251, 146, 60, 0.15);
-
-            /* Sunset gradient variations */
             --color-primary-gradient: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
             --color-secondary-gradient: linear-gradient(135deg, #C5299B 0%, #8B5CF6 100%);
-            --color-accent-gradient: linear-gradient(135deg, #0891B2 0%, #06B6D4 100%);
-
-            /* Beautiful modern shadows */
             --shadow-soft: 0 4px 20px rgba(251, 146, 60, 0.08);
             --shadow-strong: 0 10px 40px rgba(251, 146, 60, 0.15);
             --shadow-glow: 0 0 30px rgba(255, 107, 53, 0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         body {
@@ -65,26 +42,8 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Animated background */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(197, 41, 155, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 90%, rgba(8, 145, 178, 0.1) 0%, transparent 50%);
-            animation: bgMove 20s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        @keyframes bgMove {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-50px, 50px) rotate(5deg); }
+            direction: rtl;
+            text-align: right;
         }
 
         #chatbox-container {
@@ -95,128 +54,45 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 30px;
-            box-shadow: var(--shadow-strong), 
-                        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            box-shadow: var(--shadow-strong);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             position: relative;
             z-index: 1;
-            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header with glass morphism */
         #chatbox-header {
             background: var(--color-primary-gradient);
             padding: 25px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #chatbox-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-            animation: headerGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes headerGlow {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-20px, -20px); }
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
         }
 
         .header-title {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--color-white);
             margin-bottom: 5px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .header-subtitle {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.95);
-            font-weight: 400;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            position: relative;
-            z-index: 1;
         }
 
         .header-btn {
             background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: none;
             color: white;
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            font-size: 18px;
         }
 
-        .header-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .connection-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4ADE80;
-            box-shadow: 0 0 10px #4ADE80;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.9); }
-        }
-
-        /* Messages area */
         #chatbox-messages {
             flex: 1;
             overflow-y: auto;
@@ -224,17 +100,10 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 100%);
         }
 
-        /* Custom scrollbar */
         #chatbox-messages::-webkit-scrollbar {
             width: 8px;
-        }
-
-        #chatbox-messages::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
         }
 
         #chatbox-messages::-webkit-scrollbar-thumb {
@@ -242,14 +111,12 @@
             border-radius: 10px;
         }
 
-        /* Welcome message */
         .welcome-message {
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 147, 30, 0.1) 100%);
             border: 2px dashed var(--color-sunset-orange);
             border-radius: 20px;
             padding: 25px;
             text-align: center;
-            animation: fadeIn 0.6s ease;
         }
 
         .welcome-title {
@@ -258,14 +125,7 @@
             background: var(--color-primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 10px;
-        }
-
-        .welcome-text {
-            color: var(--color-text-dark);
-            font-size: 15px;
-            margin-bottom: 15px;
         }
 
         .quick-actions {
@@ -293,26 +153,17 @@
             background: var(--color-primary-gradient);
             color: white;
             border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-soft);
         }
 
-        /* Message bubbles */
         .message {
             display: flex;
             gap: 12px;
-            animation: messageSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: messageSlide 0.4s ease;
         }
 
         @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .message.user-message {
@@ -341,12 +192,14 @@
 
         .message-content {
             max-width: 70%;
-            padding: 15px 20px;
+            padding: 18px 22px;
             border-radius: 20px;
             font-size: 15px;
-            line-height: 1.6;
-            position: relative;
+            line-height: 1.8;
             word-wrap: break-word;
+            white-space: pre-wrap;
+            direction: rtl;
+            text-align: right;
         }
 
         .bot-message .message-content {
@@ -363,12 +216,87 @@
             border-bottom-left-radius: 5px;
         }
 
-        /* Typing indicator */
+        /* ✅ تنسيق النص داخل الرسائل */
+        .message-content p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .message-content strong {
+            font-weight: 700;
+            color: var(--color-sunset-orange);
+        }
+
+        .message-content ul,
+        .message-content ol {
+            margin: 10px 0;
+            padding-right: 25px;
+        }
+
+        .message-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        /* ✅ تنسيق الجداول */
+        .message-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .message-content th {
+            background: var(--color-primary-gradient);
+            color: white;
+            padding: 12px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .message-content td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: right;
+        }
+
+        .message-content tr:last-child td {
+            border-bottom: none;
+        }
+
+        .message-content tr:nth-child(even) {
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        /* ✅ تنسيق الكود */
+        .message-content code {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .message-content pre {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        /* ✅ تنسيق الفواصل */
+        .message-content hr {
+            border: none;
+            border-top: 2px solid rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+        }
+
         .typing-indicator {
             display: flex;
             gap: 12px;
-            padding: 20px 0;
-            animation: fadeIn 0.3s ease;
         }
 
         .typing-dots {
@@ -396,12 +324,10 @@
             30% { transform: scale(1.3); opacity: 1; }
         }
 
-        /* Input area */
         #chatbox-input-area {
             padding: 20px 30px;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .input-wrapper {
@@ -418,7 +344,6 @@
 
         .input-wrapper:focus-within {
             border-color: var(--color-sunset-orange);
-            box-shadow: var(--shadow-glow);
         }
 
         #user-input {
@@ -428,11 +353,8 @@
             font-size: 15px;
             font-family: 'Noto Sans Arabic', sans-serif;
             background: transparent;
-            color: var(--color-text-dark);
-        }
-
-        #user-input::placeholder {
-            color: #9CA3AF;
+            direction: rtl;
+            text-align: right;
         }
 
         #send-btn {
@@ -444,16 +366,11 @@
             color: white;
             font-size: 20px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-soft);
         }
 
         #send-btn:hover:not(:disabled) {
             transform: scale(1.1);
-            box-shadow: var(--shadow-glow);
         }
 
         #send-btn:disabled {
@@ -461,21 +378,10 @@
             cursor: not-allowed;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             #chatbox-container {
                 height: 100vh;
-                max-height: 100vh;
                 border-radius: 0;
-            }
-
-            .header-title {
-                font-size: 20px;
             }
 
             .message-content {
@@ -486,24 +392,16 @@
 </head>
 <body>
     <div id="chatbox-container">
-        <!-- Header -->
         <div id="chatbox-header">
             <div class="header-content">
                 <div class="header-title">مرحباً بك في ADYC powered by ECA</div>
                 <div class="header-subtitle">اسألني عن التخطيط للحياة والأسرة والاستعداد المالي</div>
             </div>
-            <div class="header-actions">
-                <div class="connection-status">
-                    <span class="status-dot"></span>
-                    <span>جاهز للاتصال</span>
-                </div>
-                <button class="header-btn" onclick="clearChat()" title="مسح المحادثة">
-                    🗑️
-                </button>
-            </div>
+            <button class="header-btn" onclick="clearChat()" title="مسح المحادثة">
+                🗑️
+            </button>
         </div>
 
-        <!-- Messages Area -->
         <div id="chatbox-messages">
             <div class="welcome-message">
                 <div class="welcome-title">مرحباً بك في ADYC powered by ECA</div>
@@ -517,7 +415,6 @@
             </div>
         </div>
 
-        <!-- Input Area -->
         <div id="chatbox-input-area">
             <div class="input-wrapper">
                 <input 
@@ -531,21 +428,38 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        // ✅ استخدم نفس الدومين - لا تحط localhost!
         const API_ENDPOINT = '/api/chat';
         let conversationHistory = [];
         let isProcessing = false;
 
+        // ✅ إعداد marked للـ RTL
+        marked.setOptions({
+            breaks: true,
+            gfm: true
+        });
+
+        function formatBotMessage(content) {
+            // تحويل Markdown لـ HTML
+            let html = marked.parse(content);
+            
+            // تنظيف النص
+            html = html.replace(/\n\n+/g, '\n\n');
+            
+            return html;
+        }
+
         function addMessage(content, isUser) {
             const messagesContainer = document.getElementById('chatbox-messages');
-
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
 
+            const formattedContent = isUser ? content : formatBotMessage(content);
+
             messageDiv.innerHTML = `
                 <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
-                <div class="message-content">${content}</div>
+                <div class="message-content">${formattedContent}</div>
             `;
 
             messagesContainer.appendChild(messageDiv);
@@ -571,9 +485,7 @@
 
         function hideTypingIndicator() {
             const typingIndicator = document.getElementById('typing-indicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
+            if (typingIndicator) typingIndicator.remove();
         }
 
         async function sendMessage() {
@@ -598,7 +510,7 @@
                 const messages = [
                     {
                         role: 'system',
-                        content: 'أنت مساعد ذكي من ADYC متخصص في تقديم النصائح حول: التخطيط للحياة والمستقبل المهني، تكوين الأسرة والزواج، والجاهزية المالية والادخار. قدم نصائح عملية ومفيدة باللغة العربية.'
+                        content: 'أنت مساعد ذكي من ADYC متخصص في تقديم النصائح حول: التخطيط للحياة والمستقبل المهني، تكوين الأسرة والزواج، والجاهزية المالية والادخار. قدم إجابات منظمة ومنسقة باستخدام Markdown عند الحاجة للجداول والقوائم.'
                     },
                     ...conversationHistory
                 ];
@@ -671,7 +583,6 @@
             }
         }
 
-        // ✅ تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             console.log('ADYC Chatbot loaded successfully');
         });
