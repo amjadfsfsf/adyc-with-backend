@@ -16,6 +16,17 @@ const API_KEY = process.env.API_KEY;
 const API_URL = process.env.API_URL;
 const MODEL = process.env.MODEL;
 
+// في بداية ملف JavaScript الرئيسي
+document.addEventListener('DOMContentLoaded', function() {
+    // تأكد من تطبيق RTL على كل الصفحة
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+    
+    // تطبيق RTL على الـ body
+    document.body.style.direction = 'rtl';
+    document.body.style.textAlign = 'right';
+});
+
 
 function formatArabicText(text) {
     text = text.replace(/\[\d+\]/g, '');
