@@ -20,13 +20,25 @@ const MODEL = process.env.MODEL;
 
 
 function formatArabicText(text) {
+    // إزالة المراجع [1][2]
     text = text.replace(/\[\d+\]/g, '');
-    text = text.replace(/([.!؟])\s+/g, '$1\n\n');
-    text = text.replace(/:\s+/g, ':\n');
+    
+    // فصل النقاط المرقمة
+    text = text.replace(/(\d+\.)\s+/g, '\n\n$1 ');
+    
+    // فصل النقاط بالشرطة
+    text = text.replace(/\s+-\s+/g, '\n- ');
+    
+    // إضافة سطر بعد النقطتين
+    text = text.replace(/:\s*/g, ':\n');
+    
+    // تنظيف المسافات
     text = text.replace(/\s+/g, ' ');
-    text = text.replace(/\n\s+\n/g, '\n\n');
+    text = text.replace(/\n{3,}/g, '\n\n');
+    
     return text.trim();
 }
+
 
 app.post('/api/chat', async (req, res) => {
   try {
