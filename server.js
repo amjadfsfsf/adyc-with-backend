@@ -10,9 +10,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
-const API_KEY = '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' ;
-const API_URL = 'https://api.perplexity.ai/chat/completions';
-const MODEL = 'sonar-pro'; // تم التعديل من 'sonar' إلى 'sonar-pro'
+
+const API_KEY = process.env.API_KEY;
+const API_URL = process.env.API_URL;
+const MODEL = process.env.MODEL;
+
 
 function formatArabicText(text) {
     text = text.replace(/\[\d+\]/g, '');
