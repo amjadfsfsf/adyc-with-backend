@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
-const API_KEY = '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';
+const API_KEY = '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' ;
 const API_URL = 'https://api.perplexity.ai/chat/completions';
 const MODEL = 'sonar-pro'; // تم التعديل من 'sonar' إلى 'sonar-pro'
 
